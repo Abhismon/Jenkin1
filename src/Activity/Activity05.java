@@ -50,6 +50,7 @@ public class Activity05 {
 		System.setProperty("webdriver.chrome.driver", "C:\\Users\\AbhishekMondal\\Desktop\\IBM_FST\\chromedriver.exe");
 		driver = new ChromeDriver();
 		driver.get("https://www.training-support.net/selenium/target-practice");
+		System.out.println(driver.getTitle());
 	}
 
 	@AfterClass
