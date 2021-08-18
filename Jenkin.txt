@@ -26,7 +26,7 @@ pipeline
 		{
 			steps
 			{
-				step([$class: 'Publisher', reportFilenamePattern:'**/testng-results.xml', escapeTestDescp:true, failedFails:true, failedSkips:true, showFailedBuilds:true, unstableSkips:100 , unstableFails:0 , thresholdMode:100 ) ]
+				step([$class: 'Publisher', reportFilenamePattern:'**/testng-results.xml', escapeTestDescp:true, failedFails:true, failedSkips:true, showFailedBuilds:true, unstableSkips:100 , unstableFails:0 , thresholdMode:100 ])
 			sh'mvn compile'
 			}
 		}
