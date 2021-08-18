@@ -1,34 +1,32 @@
-pipeline
-{
-	agent any
-	environment
-	{
-		JAVA_HOME = '/usr/lib/jvm/java'
-	}
-	stages
-	{
-		stage('Build')
-		{
-			steps
-			{
-			sh'mvn compile'
-			}
-		}
-		stage('Test')
-		{
-			steps
-			{
-				wrap([$class: 'Xvfb',displayName:1,displayNameOffset:1,timeout :10]) 
-				sh'mvn compile'
-			}
-		}
-		stage('Publish')
-		{
-			steps
-			{
-				step([$class: 'Publisher', reportFilenamePattern:'**/testng-results.xml', escapeTestDescp:true, failedFails:true, failedSkips:true, showFailedBuilds:true, unstableSkips:100 , unstableFails:0 , thresholdMode:100 ])
-			sh'mvn compile'
-			}
-		}
-	}
+pipeline {
+    agent any
+
+    environment {
+        JAVA_HOME = '/usr/lib/jvm/java'
+    }
+
+    stages {
+        stage('Build') {
+            steps {
+                sh 'mvn compile'
+            }
+        }
+        stage('Test') {
+            steps {
+                wrap([$class: 'Xvfb', debug: true, displayName: 99, displayNameOffset: 0, timeout: 10]) {
+                    sh 'mvn test'
+                }
+            }
+        }
+        stage('Publish') {
+            steps {
+                step([$class: 'Publisher', escapeExceptionMsg: true, escapeTestDescp: true, failureOnFailedTestConfig: false, reportFilenamePattern: '**/testng-results.xml', showFailedBuilds: false, thresholdMode: 2, unstableSkips: 100, failedSkips: 100, unstableFails: 0, failedFails: 100])
+            }
+        }
+        stage('Post') {
+            steps {
+                echo 'Tests finished'
+            }
+        }
+    }
 }
