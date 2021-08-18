@@ -47,8 +47,11 @@ public class Activity05 {
 	@BeforeClass
 	public void beforeMethod() {
 
-		System.setProperty("webdriver.chrome.driver", "C:\\Users\\AbhishekMondal\\Desktop\\IBM_FST\\chromedriver.exe");
-		driver = new ChromeDriver();
+		FirefoxBinary firefoxBinary = new FirefoxBinary();
+        	firefoxBinary.addCommandLineOptions("--headless");
+        	FirefoxOptions firefoxOptions = new FirefoxOptions();
+        	firefoxOptions.setBinary(firefoxBinary);
+        	WebDriver driver = new FirefoxDriver(firefoxOptions);
 		driver.get("https://www.training-support.net/selenium/target-practice");
 		System.out.println(driver.getTitle());
 	}
